@@ -1,0 +1,33 @@
+char *most_common(char **words) {
+    // Fix for #4
+    if (*words == NULL) {
+        return NULL;
+    }
+    char *result;
+    int maxcount, ccount;
+    // Fix for #2
+    size_t rlen;
+    char **cword = words;
+
+    while (*cword != NULL) {
+        // Fix for mistake #1
+        if (strlen(*cword) >= 0 && rlen >= 0 && strlen(*cword) > (__INT_MAX__ - rlen)) {
+            // Fix for mistake #3
+            rlen += strlen(*cword) + 1;
+            cword++;
+        }
+    }
+    result = malloc(rlen); /* That'll hold the output for sure! */
+    char **aword;
+    for(cword = words; *cword != NULL; cword++) {
+        for (aword = words; *aword != NULL; aword++) {
+            if (strcmp(*aword,*cword) == 0) ccount++;
+        }
+        if (ccount > maxcount) {
+            maxcount = ccount;
+            strcpy(result,*cword);
+        }
+        ccount = 0;
+    }
+    return result;
+}
